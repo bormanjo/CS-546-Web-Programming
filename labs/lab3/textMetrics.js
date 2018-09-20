@@ -1,31 +1,14 @@
 
 function is_member(c, container){
     /* Checks that the character c is a member of the container (either string or array) s*/
-    if(typeof container === "string"){
-        // is string
-        container = container.split("");
+
+    if(container.indexOf(c) === -1){
+        // not found
+        return false;
     } else {
-
-        if(typeof container === "undefined"){
-            // is undefined
-            return false;
-        }
-
-        // is 'container'
-        container = container;
+        // found
+        return true;
     }
-
-    console.log("container:" + toString(container));
-    
-    // loop through
-    for(let i = 0; i < container; i++){
-        // check for equality
-        if(arr[i] === c){
-            return true;
-        }
-    }
-
-    return false;
 }
 
 function is_letter(c){
@@ -53,6 +36,8 @@ function createMetrics(text){
         let type = typeof text;
         throw "Error: 'text' variable is of type " + type + " not 'string' ";
     }
+
+    text = text.toLowerCase()
 
     // Create container variables for each statistic
     metrics = {
@@ -84,7 +69,7 @@ function createMetrics(text){
                 metrics.totalVowels++;
             } else {
                 // is a consonant
-                totalConsonants++;
+                metrics.totalConsonants++;
             }
         } else {
             // is a non-letter
@@ -123,7 +108,7 @@ function createMetrics(text){
     }
 
     // get unique words
-    metrics.uniqueWords = metrics.wordOccurrences.length;
+    metrics.uniqueWords = Object.keys(metrics.wordOccurrences).length;
 
     // get average word length (avg letters per word)
     if(metrics.totalWords > 0){
@@ -146,11 +131,17 @@ function createMetrics(text){
 
 
 let test1 = "";
-let test2 = "(helllomythisisagreatdaytosayhelllohelllo)";
+let test2 = "abc1we";
 let test3 = "Helllo, my -! This is a great day to say helllo.\n\n\tHelllo! 2 3 4 23";
 
 try {
     console.log(createMetrics());
+} catch (error) {
+    console.log("throws error as expected")
+}
+
+try {
+    console.log(createMetrics(0));
 } catch (error) {
     console.log("throws error as expected")
 }

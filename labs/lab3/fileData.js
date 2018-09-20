@@ -1,25 +1,32 @@
 const bluebird = require("bluebird");
-const Promise = bluebird.Promise
+const Promise = bluebird.Promise;
+
+const fs = bluebird.promisifyAll(require("fs"));
 
 async function getFileAsString(path){
     /*
         A function that, given a path, returns a promise (implied by an async function) 
         resolving to a string containing the contents of a file 
     */
-    
-    // One or more files?
 
     // if no path -> throw 
+    if(!path){
+        throw "path not provided.";
+    }
 
-    // if errors during file read, pass the error to the rejection callback
+    const fileContent = await fs.readFileAsync(path, "utf-8");
+
+    return fileContent;
 }
 
 async function getFileAsJSON(path){
     /* A function that, given a path, returns a promise resolving to a JS object */
     
-    // if no path -> throw
+    const fileContent = await getFileAsString(path);
 
-    // if errors during file read, pass the error to the rejection callback
+    const object = JSON.parse(fileContent);
+
+    return object;
 }
 
 async function saveStringToFile(path, text){
@@ -48,6 +55,6 @@ async function saveJSONToFile(path, obj){
      // if errors during file write, pass the error to the rejection callback
 }
 
-
-
+getFileAsString("./test.txt").then(v => console.log(v));
+getFileAsJSON("./package-lock.json").then(v => console.log(v));
 
