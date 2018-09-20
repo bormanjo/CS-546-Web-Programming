@@ -3,7 +3,8 @@ const Promise = bluebird.Promise;
 
 const fs = bluebird.promisifyAll(require("fs"));
 
-async function getFileAsString(path){
+async function getFileAsString(path)
+{
     /*
         A function that, given a path, returns a promise (implied by an async function) 
         resolving to a string containing the contents of a file 
@@ -12,6 +13,10 @@ async function getFileAsString(path){
     // if no path -> throw 
     if(!path){
         throw "path not provided.";
+    } else {
+        if(typeof path !== "string"){
+            throw "path is not a string"
+        }
     }
 
     const fileContent = await fs.readFileAsync(path, "utf-8");
@@ -36,10 +41,29 @@ async function saveStringToFile(path, text){
     */
 
     // if no path -> throw
+    if(!path){
+        throw "path not provided.";
+    } else {
+        // check type
+        if(typeof path !== "string"){
+            throw "path is not a string"
+        }
+    }
 
     // if no text -> throw
+    if(!text){
+        throw "text not provided.";
+    } else {
+        // check type
+        if(typeof text !== "string"){
+            throw "text is not a string"
+        }
+    }
 
     // if errors during file write, pass the error to the rejection callback
+    await fs.writeFileAsync(path, text);
+
+    return true;
 }
 
 async function saveJSONToFile(path, obj){
@@ -48,13 +72,21 @@ async function saveJSONToFile(path, obj){
         string and writes to the file specified by path 
     */
 
-    // if no path -> throw
+    if(typeof obj !== "object"){
+        throw "obj is not an object"
+    }
 
-    // if no text -> throw
+    let string = JSON.stringify(obj, null, 4);
 
-     // if errors during file write, pass the error to the rejection callback
+    await saveStringToFile(path, string);
+
+    return true;
 }
 
-getFileAsString("./test.txt").then(v => console.log(v));
+getFileAsString("./test.txt").then(val => {
+    
+}
+);
 getFileAsJSON("./package-lock.json").then(v => console.log(v));
+
 
