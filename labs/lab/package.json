@@ -1,0 +1,16 @@
+{
+  "name": "cs-546-lab-3",
+  "version": "1.0.0",
+  "description": "The package for CS 546 Lab 3",
+  "main": "app.js",
+  "dependencies": {
+    "bluebird": "^3.5.2",
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John-Craig Borman (10402229)",
+  "license": "ISC"
+}
