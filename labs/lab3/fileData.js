@@ -83,10 +83,29 @@ async function saveJSONToFile(path, obj){
     return true;
 }
 
-getFileAsString("./test.txt").then(val => {
-    
+/* 
+getFileAsString("./test1.txt").then(v => console.log("test1:", v)).catch(e => console.log("test1:", e));
+//getFileAsJSON("./package-lock.json").then(v => console.log(v)).catch(e => console.log(e));
+
+const to_write_string = "this is a string \n to write \n \t hello";
+const to_write_object = {
+    param1: 10,
+    param2:5,
+    name: "jcb"
 }
+
+saveStringToFile("./test3.txt", to_write_string).then(
+    v => console.log("Test 3 successful?: ", v)
 );
-getFileAsJSON("./package-lock.json").then(v => console.log(v));
 
+saveJSONToFile("./test4.json", to_write_string).then(
+    v => console.log("Test 4 successful?: ", v)
+).catch(e => console.log("Test 4 successful?: ", e));
+*/
 
+module.exports = {
+    getFileAsString,
+    getFileAsJSON,
+    saveStringToFile,
+    saveJSONToFile
+}

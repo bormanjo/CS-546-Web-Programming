@@ -129,7 +129,7 @@ function createMetrics(text){
     return metrics;
 }
 
-
+/*
 let test1 = "";
 let test2 = "abc1we";
 let test3 = "Helllo, my -! This is a great day to say helllo.\n\n\tHelllo! 2 3 4 23";
@@ -149,7 +149,11 @@ try {
 console.log(createMetrics(test1));
 console.log(createMetrics(test2));
 console.log(createMetrics(test3));
+*/
 
+module.exports = {
+    createMetrics
+}
 
 
 

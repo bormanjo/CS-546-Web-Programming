@@ -1,61 +1,54 @@
-const bluebird = require("bluebird");
-const Promise = bluebird.Promise;
+const path = require("path");
+const fileData = require("./fileData")
+const textMetrics = require("./textMetrics")
 
-const prompt = bluebird.promisifyAll(require("prompt"));
-const fs = bluebird.promisifyAll(require("fs"));
+async function check_file(filepath){
+  // check if the result file exists for filepath
 
-// We declare an async function that we will run below, so that we may use await.
-async function main() {
-  const getFileOperation = {
-    name: "fileName",
-    description: "What file do you want to open?"
-  };
+  let result_file = path.parse(filepath).name + ".result.json";
 
-  // Gets result of user input
-  let promptResult = await prompt.getAsync([getFileOperation]);
-  const fileName = promptResult.fileName;
+  let results_exist;
 
-  if (!fileName) {
-    throw "Need to provide a file name";
+  try {
+    // read file results
+    let file_contents = await fileData.getFileAsJSON(result_file);
+    results_exist = true;
+
+    // print metrics
+    console.log(file_contents);
+  } catch (error) {
+    // file results don't exist
+    results_exist = false;
   }
 
-  console.log(`About to read ${fileName} if it exists`);
-  const thisIsAPromise = fs.readFileAsync(fileName, "utf-8");
+  if(!results_exist){
+    // getFileAsString(filepath)
+    let file_contents = await fileData.getFileAsString(filepath);
 
-  thisIsAPromise.then(fileContent => {
-    /* BLOCK X */
-    // Now we have the actual file data read
-    const reversedContent = fileContent
-      .split("")
-      .reverse()
-      .join("");
+    // run text metrics
+    file_contents = await textMetrics.createMetrics(file_contents);
 
-    const reversedName = `reversed_${fileName}`;
-    return reversedName;
-    /* END BLOCK X */
-  });
+    // store text metrics in filepath.result.json
+    fileData.saveJSONToFile("./" + result_file, file_contents);
 
-  /* BLOCK Y */
-  const fileContent = await thisIsAPromise;
-
-  // Now we have the actual file data read
-  const reversedContent = fileContent
-    .split("")
-    .reverse()
-    .join("");
-
-  const reversedName = `reversed_${fileName}`;
-  /* END BLOCK Y */
-
-  /* BLOCK X and BLOCK Y are functionally equivalent */
-
-  await fs.writeFileAsync(reversedName, reversedContent);
-  console.log("Finished!");
-
-  return null;
+    // print metrics
+    console.log(file_contents);
+  }
+  
+  
 }
 
-// Now we run it
-main().catch(err => {
-  console.log(err);
-});
+async function main(){
+  let files = ['./chapter1.txt', './chapter2.txt', './chapter3.txt'];
+
+  await check_file(files[0]);
+  await check_file(files[1]);
+  await check_file(files[2]);
+
+  console.log("Finished!");
+}
+
+main().catch(e => {
+    console.log(e);
+})
+
