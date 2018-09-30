@@ -1,0 +1,15 @@
+{
+  "name": "cs-546-lab-4",
+  "version": "1.0.0",
+  "description": "A package for CS 546 Lab 4",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John-Craig Borman (10402229)",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^3.1.6",
+    "uuid": "^3.3.2"
+  }
+}
