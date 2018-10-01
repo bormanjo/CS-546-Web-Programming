@@ -1,3 +1,5 @@
+/* A module for data manipulation within the mongoDB */
+
 const uuidv4 = require('uuid/v4')
 const mongoCollections = require("./mongoCollections");
 const todoItems = mongoCollections.todoItems;
@@ -11,6 +13,7 @@ async function getAllTasks(){
     // Get all tasks
     const tasks = await taskCollection.find({}).toArray();
 
+    
     // resolve to tasks
     return tasks;
 }
@@ -24,10 +27,11 @@ async function getTask(id){
     
     // Get DB collection
     const taskCollection = await todoItems();
+
     const task = await taskCollection.findOne({ _id: id });
-    
+
     // if task does not exist -> reject
-    if (task === null) throw "No dog with that id";
+    if (task === null) throw "No task with that id";
     
     // resolve to task
     return task;  
@@ -37,13 +41,13 @@ async function getTask(id){
 async function createTask(title, description){
     /* An async function that resolves to a newly created to-do list object */
 
-    if (!title) throw "You must provide a name for your dog";
+    if (!title) throw "You must provide a title for your task";
 
-    if (!description) throw "You must provide an array of breeds";
+    if (!description) throw "You must provide a description of your task";
 
     // Get DB collection
     const taskCollection = await todoItems();
-
+    
     // Create and set the _id field before inserting the document
     let newTask = {
         _id: uuidv4(),
@@ -62,7 +66,10 @@ async function createTask(title, description){
     // Get the inserted ID
     const newId = insertInfo.insertedId;
 
+    // Get the task
     const task = await this.getTask(newId);
+
+    // Return the task
     return task;
 }
 
@@ -72,9 +79,9 @@ async function completeTask(taskId){
     and `completedAt` to the current time */
 
     // if no id -> reject
-    if (!id) throw "You must provide an id to search for";
+    if (!taskId) throw "You must provide an id to search for";
 
-    // Get DB Collection
+    // Get DB collection
     const taskCollection = await todoItems();
 
     // Get Task
@@ -85,16 +92,16 @@ async function completeTask(taskId){
     // Update task
     task["completed"] = true;
     task["completedAt"] = Date.now();
-    const updateInfo = await taskCollection.updateOne({ _id: id }, task);
+
+    const updatedInfo = await taskCollection.updateOne({ _id: taskId }, {$set: task});
     
     // if task cannot be updated -> reject
     if (updatedInfo.modifiedCount === 0) {
-      throw "could not update dog successfully";
+      throw "could not update task successfully";
     }
 
-
     // if successful, resolves to the updated task
-    return await getTask(id);
+    return await getTask(taskId);
 }
 
 async function removeTask(id){
@@ -103,7 +110,7 @@ async function removeTask(id){
     // if no id -> reject
     if (!id) throw "You must provide an id to search for";
 
-    // Get DB Collection
+    // Get DB collection
     const taskCollection = await todoItems();
 
     // Get Deletion info
