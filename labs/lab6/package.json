@@ -1,0 +1,14 @@
+{
+  "name": "lab6",
+  "version": "1.0.0",
+  "description": "John-Craig Borman's CS 546 Lab 6 package",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "John-Craig Borman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
