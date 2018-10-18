@@ -1,0 +1,18 @@
+{
+  "name": "lab7",
+  "version": "1.0.0",
+  "description": "A module for CS 546 Lab 7",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "John-Craig Borman (10402229)",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.8",
+    "mongoose": "^5.3.3",
+    "node-uuid": "^1.4.8"
+  }
+}
