@@ -3,13 +3,12 @@ const router = express.Router();
 const data = require("../data");
 const recipeData = data.recipes;
 
-router.use("", function(req, res) {
-    console.log('%s %s %s', req.method, req.url, req.path);
-}
-);
+router.use(function(req, res) {
+    console.log('%s %s %s', req.method, req.originalUrl, req.path);
+})
 
 // Responds with an array of all recipes in the format of {_id: ..., title: ...}
-router.get("/recipes", async (req, res) => {
+router.get("/", async (req, res) => {
     console.log("GET request received to retrieve all recipes");
     try {
         // Get all recipes in the Colleciton
@@ -23,7 +22,7 @@ router.get("/recipes", async (req, res) => {
 
 
 // Responds with the full content of the specified recipe
-router.get("/recipes/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     console.log(`GET request received to retrieve recipe of id ${req.params.id}`);
     try {
         // Get the recipe for the given id
@@ -36,7 +35,7 @@ router.get("/recipes/:id", async (req, res) => {
 });
 
 // Creates a recipe with the suplied data in the request body and returns the new recipe
-router.post("/recipes", async (req, res) => {
+router.post("/", async (req, res) => {
     console.log(`POST request received to add new recipe`);
 
     const recipe = req.body; // Get recipe data
@@ -54,7 +53,7 @@ router.post("/recipes", async (req, res) => {
 });
 
 // Updates the specified recipe by replacing the recipe with the new content and returns the updated recipe
-router.put("/recipes/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
     console.log(`PUT request received to replace recipe of id ${req.params.id} with new recipe`);
 
     const recipe = req.body; // Get recipe data
@@ -88,7 +87,7 @@ router.put("/recipes/:id", async (req, res) => {
 });
 
 // Updates the specified recipe with only the supplied changes and returns the updated recipe
-router.patch("/recipes/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
     console.log(`PATCH request received to update recipe of id ${req.params.id}`);
 
     const recipe = req.body; // Get recipe data
@@ -121,7 +120,7 @@ router.patch("/recipes/:id", async (req, res) => {
 });
 
 // Delets a recipe and returns nothing
-router.delete("/recipes/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
     console.log(`DELETE request received to remove recipe of id ${req.params.id}`);
 
     try {
