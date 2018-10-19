@@ -1,6 +1,7 @@
 const MongoCollections = require('../config/mongoCollections');     // Import the collections obj
 const recipes = MongoCollections.recipes;                           //   specifically the recipes collection
 const uuid = require('node-uuid');                                  // Import the UUID module
+const mongo = require('mongodb');
 
 // Define the set of methods to export
 const exportedMethods = {
@@ -12,7 +13,7 @@ const exportedMethods = {
         const recipeCollection = await recipes();
 
         // Return just the _id and title fields
-        return await recipeCollection.find({}, {_id: 1, title: 1}).toArray();
+        return await recipeCollection.find({}, {projection: {"_id": true, "title": true}}).toArray();
     },
 
     // GET
@@ -22,8 +23,8 @@ const exportedMethods = {
         if (!id) throw "No ID provided.";
 
         const recipeCollection = await recipes();
-        const recipe = await recipeCollection.find({_id: id}).toArray();
-
+        const recipe = await recipeCollection.findOne({_id: id});
+        console.log("recipe: " + recipe)
         if (!recipe) throw "No recipe found for the given ID";
 
         return recipe;
@@ -53,10 +54,10 @@ const exportedMethods = {
 
         // Define a new recipe object
         const newRecipe = {
-            _id: uuid.v4(),
-            title: title,
-            ingredients: ingredients,
-            steps: steps
+            "_id": uuid.v1(),
+            "title": title,
+            "ingredients": ingredients,
+            "steps": steps
         };
 
         // Add that recipe
@@ -99,7 +100,7 @@ const exportedMethods = {
 
         // Create the mongo query cmd
         const query = {
-            _id: id
+            _id: mongo.ObjectID(id)
         };
 
         // Run the query and execute the update cmd
@@ -119,6 +120,8 @@ const exportedMethods = {
         if (deletionInfo.deletedCount === 0){
             throw `Could not delete post with ID of ${id}`;
         }
+
+        return undefined;
     },
 
     // PUT

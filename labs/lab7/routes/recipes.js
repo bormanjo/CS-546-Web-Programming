@@ -3,8 +3,9 @@ const router = express.Router();
 const data = require("../data");
 const recipeData = data.recipes;
 
-router.use(function(req, res) {
-    console.log('%s %s %s', req.method, req.originalUrl, req.path);
+router.all("/", function(req, res, next) {
+    console.log('%s %s %s', req.method, req.originalUrl, req.path)
+    next()
 })
 
 // Responds with an array of all recipes in the format of {_id: ..., title: ...}
@@ -25,6 +26,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     console.log(`GET request received to retrieve recipe of id ${req.params.id}`);
     try {
+        console.log(req.params.id)
         // Get the recipe for the given id
         const recipe = await recipeData.getRecipeById(req.params.id);
         // Return the recipe
@@ -37,13 +39,17 @@ router.get("/:id", async (req, res) => {
 // Creates a recipe with the suplied data in the request body and returns the new recipe
 router.post("/", async (req, res) => {
     console.log(`POST request received to add new recipe`);
-
     const recipe = req.body; // Get recipe data
 
     try {
         // Add the recipe data
-        const {title, ingredients, steps} = recipe;
-        const newRecipe = await recipeData.addRecipe(title, ingredients, steps);
+        console.log("recipe: ")
+        console.log(recipe.title)
+        console.log(recipe.ingredients)
+        console.log(recipe.steps)
+        const newRecipe = await recipeData.addRecipe(recipe.title, recipe.ingredients, recipe.steps);
+        console.log("added recipe: ")
+        console.log(newRecipe)
 
         // Return the new recipe
         res.json(newRecipe);
@@ -72,8 +78,8 @@ router.put("/:id", async (req, res) => {
         const {title, ingredients, steps} = recipe;
         const replacementData = {
             title: title, 
-            ingredients: ingredients, 
-            steps: steps
+            ingredients: JSON.parse(ingredients), 
+            steps: JSON.parse(steps)
         };
 
         // Replace the recipe with the corresponding data
@@ -105,8 +111,8 @@ router.patch("/:id", async (req, res) => {
         const {title, ingredients, steps} = recipe;
         const updateData = {
             title: title, 
-            ingredients: ingredients, 
-            steps: steps
+            ingredients: JSON.parse(ingredients), 
+            steps: JSON.parse(steps)
         };
 
         // Update the id with the updateData
