@@ -1,10 +1,13 @@
-h2 {
-    text-align: center
+h1 {
+    text-align: center;
+    font: 3em comic-sans;
 }
 
 p.description {
     font-size: 16pt;
     border-bottom: 1px solid #333;
+    text-indent: 4ch;
+    padding-bottom: 10px
 }
 
 p.success {
@@ -15,4 +18,24 @@ p.success {
 p.failure {
     font-size: 18;
     color: #dc3545;
+}
+
+p.error {
+    font-size: 18;
+    color: #dc3545;
+}
+
+div {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+form {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+button {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

@@ -10,7 +10,9 @@ function stripSpecialChars(text){
 function isPalindrome(text){
     /* Given a string of text, checks whether the alphanumeric characters in the string comprise a palindrome or not */
 
-    text = stripSpecialChars(text);
+    var text = stripSpecialChars(text);
+
+    text = text.toLowerCase();
 
     // start i at beginning, j at end and step inward
     for(i = 0, j = text.length - 1; i < j; i++, j--){

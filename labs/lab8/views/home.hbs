@@ -1,0 +1,12 @@
+<main>
+    <h1>{{title}}</h1>
+    <p class="description">A Palindrome is a phrase or number whose array of characters are equivalent to the array of the reverse order. The Palindrome Checker herein contains a functionality to check a given alphanumeric string for the esteemed Palindrome status!</p>
+    <form action="/results", method="POST", id="palindrome-chkr">
+        <fieldset>
+            <legend>Palindrome Checker:</legend>
+            <label for="palindrome-str">Enter a String</label><br>
+            <input type="text" name="text-to-test" id="palindrome-str"><br>
+        </fieldset>
+    </form>
+    <button type="submit" form="palindrome-chkr" value="Submit">Submit</button>
+</main>

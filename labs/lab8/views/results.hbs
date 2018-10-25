@@ -1,0 +1,14 @@
+<main>
+  <h1>{{title}}</h1>
+  <p class="description">The results of the Palindrome Checker are in:</p>
+  <div>
+    {{#if output}}
+      {{{output}}}
+      {{{palText}}}
+    {{/if}}
+    {{#if error}}
+      {{{error}}}
+    {{/if}}
+  </div>
+  <a href="/">Try another Palindrome!</a>
+</main>
