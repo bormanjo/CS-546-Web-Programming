@@ -1,0 +1,18 @@
+h2 {
+    text-align: center
+}
+
+p.description {
+    font-size: 16pt;
+    border-bottom: 1px solid #333;
+}
+
+p.success {
+    font-size: 18;
+    color: #28a745;
+}
+
+p.failure {
+    font-size: 18;
+    color: #dc3545;
+}
