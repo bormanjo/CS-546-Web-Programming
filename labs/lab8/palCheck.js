@@ -12,6 +12,10 @@ function isPalindrome(text){
 
     var text = stripSpecialChars(text);
 
+    if (text === ""){
+        return false;
+    }
+
     text = text.toLowerCase();
 
     // start i at beginning, j at end and step inward

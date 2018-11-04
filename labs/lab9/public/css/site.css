@@ -1,0 +1,47 @@
+h1 {
+    text-align: center;
+    font: 3em comic-sans;
+}
+
+div {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.is-palindrome {
+    color: #0000FF;
+}
+
+.not-palindrome {
+    color: #FF0000;
+}
+
+form {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+button {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.form-box {
+    border-color: blueviolet;
+}
+
+.error-box {
+    box-shadow: 5px 5px #888888;
+}
+
+.result-box {
+    box-shadow: 5px 5px green;
+}
+
+textarea {
+    width: 600px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: Tahoma, sans-serif;
+}
