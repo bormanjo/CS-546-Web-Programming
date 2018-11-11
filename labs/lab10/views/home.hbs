@@ -1,0 +1,17 @@
+<main>
+    <h1>{{page}}</h1>
+    <p class="description"></p>
+    <div class="col-sm-12">
+        <form id="login-form" method="post" action="/login">
+            <div class="form-box">
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <br>
+                <button id="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    {{#if error}}
+        {{{error}}}
+    {{/if}}
+</main>

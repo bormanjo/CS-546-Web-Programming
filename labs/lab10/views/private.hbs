@@ -1,0 +1,13 @@
+<main>
+  <h1>{{page}}</h1>
+  <div>
+    {{#if data}}
+        <a href="/logout">Logout</a>
+        <br>
+      {{data}}
+    {{/if}}
+    {{#if error}}
+      {{error}}
+    {{/if}}
+  </div>
+</main>
